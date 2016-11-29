@@ -4,6 +4,7 @@ var io = require('socket.io')(http);
 var request = require('request');
 var jsonfile = require('jsonfile')
 var findRemoveSync = require('find-remove');
+var fs = require('fs');
 var _ = require('lodash')
 var port = process.env.PORT || 3000;
 
@@ -14,7 +15,7 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   console.log('a user connected');
 
-  socket.on('RupdateStatus', function(socket){
+  socket.on('RupdateStatus', function(msg){
     //TODO ADD LOGIC
     //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
 
