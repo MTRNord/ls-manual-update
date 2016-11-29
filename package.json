@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/MTRNord/ls-manual-update/issues"
   },
-  "homepage": "https://github.com/MTRNord/ls-manual-update#readme"
+  "homepage": "https://github.com/MTRNord/ls-manual-update#readme",
+  "dependencies": {
+    "express": "4.14.0",
+    "socket.io": "^1.7.1"
+  }
 }
