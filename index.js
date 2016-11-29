@@ -13,43 +13,36 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   console.log('a user connected');
-});
 
-io.on('RupdateStatus', function(socket){
-  //TODO ADD LOGIC
-  //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
+  socket.on('RupdateStatus', function(socket){
+    //TODO ADD LOGIC
+    //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
 
-  findRemoveSync('cache.json', {age: {seconds: 3600}});
-  if (!fs.statSync('cache.json').isFile()) {
-    request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        jsonfile.writeFileSync("cache.json", body)
-      }
-    })
-    var release = jsonfile.readFileSync("cache.json")
-    var version = release["tag_name"]
-    var assets = release["assets"]
-    _.find(assets, function (key) {
-      if (assets[key]["name"] == local) {
-        var local_asset = assets[key]["name"]
-        console.log(release);
-      }
-    })
+    findRemoveSync('cache.json', {age: {seconds: 3600}});
+    if (!fs.statSync('cache.json').isFile()) {
+      request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          jsonfile.writeFileSync("cache.json", body)
+        }
+      })
+      var release = jsonfile.readFileSync("cache.json")
+      var version = release["tag_name"]
+      var assets = release["assets"]
+      _.find(assets, function (key) {
+        if (assets[key]["name"] == local) {
+          var local_asset = assets[key]["name"]
+          console.log(release);
+        }
+      })
 
-  }else {
-    var release = jsonfile.readFileSync("cache.json")
-    var version = release["tag_name"]
-    var assets = release["assets"]
-  }
+    }else {
+      var release = jsonfile.readFileSync("cache.json")
+      var version = release["tag_name"]
+      var assets = release["assets"]
+    }
+    io.emit('AupdateStatus', 'local');
+  });
 
-
-
-
-
-
-
-
-  io.emit('AupdateStatus', 'local');
 });
 
 http.listen(port, function(){
