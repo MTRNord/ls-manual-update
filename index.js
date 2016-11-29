@@ -20,7 +20,13 @@ io.on('connection', function(socket){
     //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
 
     findRemoveSync('cache.json', {age: {seconds: 3600}});
-    if (!fs.statSync('cache.json').isFile()) {
+    try {
+      fs.statSync('cache.json').isFile()
+
+      var release = jsonfile.readFileSync("cache.json")
+      var version = release["tag_name"]
+      var assets = release["assets"]
+    } catch (e) {
       request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
         if (!error && response.statusCode == 200) {
           jsonfile.writeFileSync("cache.json", body)
@@ -35,12 +41,8 @@ io.on('connection', function(socket){
           console.log(release);
         }
       })
-
-    }else {
-      var release = jsonfile.readFileSync("cache.json")
-      var version = release["tag_name"]
-      var assets = release["assets"]
     }
+
     io.emit('AupdateStatus', 'local');
   });
 
