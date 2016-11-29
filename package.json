@@ -19,6 +19,10 @@
   "homepage": "https://github.com/MTRNord/ls-manual-update#readme",
   "dependencies": {
     "express": "4.14.0",
+    "find-remove": "^1.0.0",
+    "jsonfile": "^2.4.0",
+    "lodash": "^4.17.2",
+    "request": "^2.79.0",
     "socket.io": "^1.7.1"
   }
 }
