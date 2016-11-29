@@ -19,7 +19,7 @@ io.on('RupdateStatus', function(socket){
   //TODO ADD LOGIC
   //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
 
-  findRemoveSync('cache.json', {age: {seconds: 3600}});)
+  findRemoveSync('cache.json', {age: {seconds: 3600}});
   if (!fs.statSync('cache.json').isFile()) {
     request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
       if (!error && response.statusCode == 200) {
