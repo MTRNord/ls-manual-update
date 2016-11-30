@@ -19,9 +19,15 @@ io.on('connection', function(socket){
     //TODO ADD LOGIC
     //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
 
-    findRemoveSync('cache.json', {age: {seconds: 3600}});
     try {
       fs.accessSync(path, fs.F_OK);
+
+      findRemoveSync('cache.json', {age: {seconds: 3600}});
+    } catch (e) {
+
+    }
+    try {
+      fs.accessSync('cache.json', fs.F_OK);
 
       var release = jsonfile.readFileSync("cache.json")
       var version = release["tag_name"]
