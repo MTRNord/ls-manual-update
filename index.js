@@ -34,18 +34,20 @@ io.on('connection', function(socket){
         var release = jsonfile.readFileSync("cache.json")
         var version = release["tag_name"]
         var assets = release["assets"]
-        x = 0;
         _.find(assets, function (key) {
           if (key["name"] == 'local') {
             var local_asset = key["name"]
+            console.log("local");
             io.emit('AupdateStatus', 'local');
           }else {
-            if (!x == assets.length) {
+            if (_.findIndex(assets, key) == assets.length-1) {
               console.log("not local");
               io.emit('AupdateStatus', 'NOTlocal');
+            }else {
+              io.emit('AupdateStatus', 'bug');
             }
+            console.log("Länge X " + _.findIndex(assets, key));
           }
-          x + 1;
         })
       } else {
         console.log("aquire file");
