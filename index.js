@@ -43,6 +43,7 @@ io.on('connection', function(socket){
               if (assets[key]["name"] == local) {
                 var local_asset = assets[key]["name"]
                 console.log(release);
+                io.emit('AupdateStatus', 'local');
               }else {
                 console.log("not worked but:");
                 console.log(release);
@@ -52,9 +53,6 @@ io.on('connection', function(socket){
         })
       }
     });
-
-
-    io.emit('AupdateStatus', 'local');
   });
 
 });
