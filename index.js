@@ -73,9 +73,9 @@ io.on('connection', function(socket){
                   console.log("not local");
                   io.emit('AupdateStatus', 'NOTlocal');
                 }
+                console.log("Länge X " + x);
+                x + 1;
               }
-              console.log("Länge X " + x);
-              x + 1;
             })
           }else {
             console.log(response);
