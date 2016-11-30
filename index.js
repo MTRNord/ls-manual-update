@@ -63,6 +63,7 @@ io.on('connection', function(socket){
             var assets = release["assets"]
             console.log("request made");
             x = 0;
+            console.log("Länge" + assets.length);
             _.find(assets, function (key) {
               if (key["name"] == 'local') {
                 var local_asset = key["name"]
@@ -73,6 +74,7 @@ io.on('connection', function(socket){
                   io.emit('AupdateStatus', 'NOTlocal');
                 }
               }
+              console.log("Länge X " + x);
               x + 1;
             })
           }else {
