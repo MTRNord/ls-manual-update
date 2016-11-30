@@ -34,8 +34,15 @@ io.on('connection', function(socket){
         var release = jsonfile.readFileSync("cache.json")
         var version = release["tag_name"]
         var assets = release["assets"]
-        console.log(release);
-        io.emit('AupdateStatus', 'local');
+        _.find(assets, function (key) {
+          if (key["name"] == 'local') {
+            var local_asset = key["name"]
+            io.emit('AupdateStatus', 'local');
+          }else {
+            console.log("not local");
+            io.emit('AupdateStatus', 'NOTlocal');
+          }
+        })
       } else {
         console.log("aquire file");
         var options = {
@@ -50,16 +57,13 @@ io.on('connection', function(socket){
             var release = JSON.parse(body);
             var version = release["tag_name"]
             var assets = release["assets"]
-            console.log("request made: " + release);
+            console.log("request made");
             _.find(assets, function (key) {
-              console.log(key);
               if (key["name"] == 'local') {
                 var local_asset = key["name"]
-                console.log(release);
                 io.emit('AupdateStatus', 'local');
               }else {
-                console.log("not worked but:");
-                console.log(release);
+                console.log("not local");
                 io.emit('AupdateStatus', 'NOTlocal');
               }
             })
