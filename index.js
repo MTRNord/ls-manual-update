@@ -62,14 +62,18 @@ io.on('connection', function(socket){
             var version = release["tag_name"]
             var assets = release["assets"]
             console.log("request made");
+            x = 0;
             _.find(assets, function (key) {
               if (key["name"] == 'local') {
                 var local_asset = key["name"]
                 io.emit('AupdateStatus', 'local');
               }else {
-                console.log("not local");
-                io.emit('AupdateStatus', 'NOTlocal');
+                if (!x < assets.length) {
+                  console.log("not local");
+                  io.emit('AupdateStatus', 'NOTlocal');
+                }
               }
+              x + 1;
             })
           }else {
             console.log(response);
