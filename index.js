@@ -55,6 +55,9 @@ io.on('connection', function(socket){
                 console.log(release);
               }
             })
+          }else {
+            console.log(response);
+            console.error(error);
           }
         })
       }
