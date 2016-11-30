@@ -38,7 +38,13 @@ io.on('connection', function(socket){
         io.emit('AupdateStatus', 'local');
       } else {
         console.log("aquire file");
-        request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
+        var options = {
+          url: 'https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest',
+          headers: {
+            'User-Agent': 'ls-vertretungsplan'
+          }
+        };
+        request(options, function (error, response, body) {
           if (!error && response.statusCode == 200) {
             jsonfile.writeFile("cache.json", body)
             var release = body
