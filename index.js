@@ -68,7 +68,7 @@ io.on('connection', function(socket){
                 var local_asset = key["name"]
                 io.emit('AupdateStatus', 'local');
               }else {
-                if (_.findIndex(assets, key) != assets.length-1) {
+                if (_.findIndex(assets, key) == assets.length-1) {
                   console.log("not local");
                   io.emit('AupdateStatus', 'NOTlocal');
                 }
