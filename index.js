@@ -66,11 +66,14 @@ io.on('connection', function(socket){
             _.find(assets, function (key) {
               if (key["name"] == 'local') {
                 var local_asset = key["name"]
+                console.log("local");
                 io.emit('AupdateStatus', 'local');
               }else {
                 if (_.findIndex(assets, key) == assets.length-1) {
                   console.log("not local");
                   io.emit('AupdateStatus', 'NOTlocal');
+                }else {
+                  io.emit('AupdateStatus', 'bug');
                 }
                 console.log("Länge X " + _.findIndex(assets, key));
               }
