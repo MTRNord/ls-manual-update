@@ -19,24 +19,25 @@ io.on('connection', function(socket){
     console.log("got msg")
     //TODO ADD LOGIC
     //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
-
-    try {
-      fs.accessSync(path, fs.F_OK);
-
-      findRemoveSync('cache.json', {age: {seconds: 3600}});
-    } catch (e) {
-
-    }
-
-    fs.access('cache.json', fs.F_OK, function(err) {
-      if (!err) {
-        console.log("file exists");
-        var release = jsonfile.readFileSync("cache.json")
+    console.log("aquire file");
+    var options = {
+      url: 'https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest',
+      headers: {
+        'User-Agent': 'ls-vertretungsplan'
+      }
+    };
+    request(options, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        jsonfile.writeFile("cache.json", body)
+        var release = JSON.parse(body);
         var version = release["tag_name"]
         var assets = release["assets"]
+        console.log("request made");
+        console.log("Länge" + assets.length);
         _.find(assets, function (key) {
           if (key["name"] == 'local') {
             var local_asset = key["name"]
+            var release_body = release["body"]
             console.log("local");
             io.emit('AupdateStatus', {'status': 'local', 'body': release_body});
           }else {
@@ -50,48 +51,12 @@ io.on('connection', function(socket){
             console.log("Länge X " + _.findIndex(assets, key));
           }
         })
-      } else {
-        console.log("aquire file");
-        var options = {
-          url: 'https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest',
-          headers: {
-            'User-Agent': 'ls-vertretungsplan'
-          }
-        };
-        request(options, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-            jsonfile.writeFile("cache.json", body)
-            var release = JSON.parse(body);
-            var version = release["tag_name"]
-            var assets = release["assets"]
-            console.log("request made");
-            console.log("Länge" + assets.length);
-            _.find(assets, function (key) {
-              if (key["name"] == 'local') {
-                var local_asset = key["name"]
-                var release_body = release["body"]
-                console.log("local");
-                io.emit('AupdateStatus', {'status': 'local', 'body': release_body});
-              }else {
-                if (_.findIndex(assets, key) == assets.length-1) {
-                  console.log("not local");
-                  io.emit('AupdateStatus', {'status': 'NOTlocal'});
-                }
-                // }else {
-                //   io.emit('AupdateStatus', 'bug');
-                // }
-                console.log("Länge X " + _.findIndex(assets, key));
-              }
-            })
-          }else {
-            console.log(response);
-            console.error(error);
-          }
-        })
+      }else {
+        console.log(response);
+        console.error(error);
       }
-    });
+    })
   });
-
 });
 
 http.listen(port, function(){
