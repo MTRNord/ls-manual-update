@@ -43,9 +43,10 @@ io.on('connection', function(socket){
             if (_.findIndex(assets, key) == assets.length-1) {
               console.log("not local");
               io.emit('AupdateStatus', 'NOTlocal');
-            }else {
-              io.emit('AupdateStatus', 'bug');
             }
+            // }else {
+            //   io.emit('AupdateStatus', 'bug');
+            // }
             console.log("Länge X " + _.findIndex(assets, key));
           }
         })
@@ -74,9 +75,10 @@ io.on('connection', function(socket){
                 if (_.findIndex(assets, key) == assets.length-1) {
                   console.log("not local");
                   io.emit('AupdateStatus', 'NOTlocal');
-                }else {
-                  io.emit('AupdateStatus', 'bug');
                 }
+                // }else {
+                //   io.emit('AupdateStatus', 'bug');
+                // }
                 console.log("Länge X " + _.findIndex(assets, key));
               }
             })
