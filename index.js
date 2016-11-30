@@ -62,19 +62,17 @@ io.on('connection', function(socket){
             var version = release["tag_name"]
             var assets = release["assets"]
             console.log("request made");
-            x = 0;
             console.log("Länge" + assets.length);
             _.find(assets, function (key) {
               if (key["name"] == 'local') {
                 var local_asset = key["name"]
                 io.emit('AupdateStatus', 'local');
               }else {
-                if (!x == assets.length) {
+                if (_.findIndex(assets, key) != assets.length) {
                   console.log("not local");
                   io.emit('AupdateStatus', 'NOTlocal');
                 }
-                console.log("Länge X " + x);
-                x + 1;
+                console.log("Länge X " + _.findIndex(assets, key));
               }
             })
           }else {
