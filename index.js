@@ -21,7 +21,7 @@ io.on('connection', function(socket){
 
     findRemoveSync('cache.json', {age: {seconds: 3600}});
     try {
-      fs.statSync('cache.json').isFile()
+      fs.accessSync(path, fs.F_OK);
 
       var release = jsonfile.readFileSync("cache.json")
       var version = release["tag_name"]
