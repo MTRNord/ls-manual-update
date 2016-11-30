@@ -53,13 +53,14 @@ io.on('connection', function(socket){
             console.log("request made: " + release);
             _.find(assets, function (key) {
               console.log(key);
-              if (key["name"] == local) {
+              if (key["name"] == 'local') {
                 var local_asset = key["name"]
                 console.log(release);
                 io.emit('AupdateStatus', 'local');
               }else {
                 console.log("not worked but:");
                 console.log(release);
+                io.emit('AupdateStatus', 'NOTlocal');
               }
             })
           }else {
