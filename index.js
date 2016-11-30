@@ -36,20 +36,20 @@ io.on('connection', function(socket){
         request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
           if (!error && response.statusCode == 200) {
             jsonfile.writeFileSync("cache.json", body)
-          }
-        })
-        var release = jsonfile.readFileSync("cache.json")
-        var version = release["tag_name"]
-        var assets = release["assets"]
-        _.find(assets, function (key) {
-          if (assets[key]["name"] == local) {
-            var local_asset = assets[key]["name"]
-            console.log(release);
+            var release = body
+            var version = release["tag_name"]
+            var assets = release["assets"]
+            _.find(assets, function (key) {
+              if (assets[key]["name"] == local) {
+                var local_asset = assets[key]["name"]
+                console.log(release);
+              }
+            })
           }
         })
       }
     });
-  
+
 
     io.emit('AupdateStatus', 'local');
   });
