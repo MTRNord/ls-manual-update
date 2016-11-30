@@ -40,7 +40,7 @@ io.on('connection', function(socket){
             var local_asset = key["name"]
             io.emit('AupdateStatus', 'local');
           }else {
-            if (!x < assets.length) {
+            if (!x == assets.length) {
               console.log("not local");
               io.emit('AupdateStatus', 'NOTlocal');
             }
@@ -68,7 +68,7 @@ io.on('connection', function(socket){
                 var local_asset = key["name"]
                 io.emit('AupdateStatus', 'local');
               }else {
-                if (!x < assets.length) {
+                if (!x == assets.length) {
                   console.log("not local");
                   io.emit('AupdateStatus', 'NOTlocal');
                 }
