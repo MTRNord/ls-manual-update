@@ -35,10 +35,11 @@ io.on('connection', function(socket){
       } else {
         request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
           if (!error && response.statusCode == 200) {
-            jsonfile.writeFileSync("cache.json", body)
+            jsonfile.writeFile("cache.json", body)
             var release = body
             var version = release["tag_name"]
             var assets = release["assets"]
+            console.log("request made");
             _.find(assets, function (key) {
               if (assets[key]["name"] == local) {
                 var local_asset = assets[key]["name"]
