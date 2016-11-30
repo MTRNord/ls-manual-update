@@ -52,6 +52,7 @@ io.on('connection', function(socket){
             var assets = release["assets"]
             console.log("request made: " + release);
             _.find(assets, function (key) {
+              console.log(key);
               if (assets[key]["name"] == local) {
                 var local_asset = assets[key]["name"]
                 console.log(release);
