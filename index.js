@@ -16,6 +16,7 @@ io.on('connection', function(socket){
   console.log('a user connected');
 
   socket.on('RupdateStatus', function(msg){
+    console.log("got msg")
     //TODO ADD LOGIC
     //get /repos/MTRNord/ls-vertretungsplan-desktop/releases/latest
 
@@ -29,10 +30,14 @@ io.on('connection', function(socket){
 
     fs.access('cache.json', fs.F_OK, function(err) {
       if (!err) {
+        console.log("file exists");
         var release = jsonfile.readFileSync("cache.json")
         var version = release["tag_name"]
         var assets = release["assets"]
+        console.log(release);
+        io.emit('AupdateStatus', 'local');
       } else {
+        console.log("aquire file");
         request('https://api.github.com/repos/MTRNord/ls-vertretungsplan-desktop/releases/latest', function (error, response, body) {
           if (!error && response.statusCode == 200) {
             jsonfile.writeFile("cache.json", body)
