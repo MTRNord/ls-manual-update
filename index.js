@@ -47,7 +47,7 @@ io.on('connection', function(socket){
         request(options, function (error, response, body) {
           if (!error && response.statusCode == 200) {
             jsonfile.writeFile("cache.json", body)
-            var release = body
+            var release = JSON.parse(body);
             var version = release["tag_name"]
             var assets = release["assets"]
             console.log("request made: " + release);
